@@ -1,0 +1,13 @@
+@model EcommerceApplication.Models.Product
+
+<h2>@Model.Name</h2>
+<p><b>Category:</b> @Model.Category?.Name</p>
+<p><b>Price:</b> @Model.Price</p>
+<p>@Model.Description</p>
+
+<form asp-controller="Cart" asp-action="Add" method="post">
+    <input type="hidden" name="productId" value="@Model.Id" />
+    <button type="submit">Add to Cart</button>
+</form>
+
+<p><a asp-controller="Shop" asp-action="Index">Back</a></p>

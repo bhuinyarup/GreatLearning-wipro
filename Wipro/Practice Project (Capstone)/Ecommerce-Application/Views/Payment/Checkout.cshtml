@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Payment Gateway";
+}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg p-4 text-center">
+
+        <h2 class="mb-3">💳 Dummy Payment Gateway</h2>
+
+        <p class="text-muted">
+            This is a demo payment page (No real payment).
+        </p>
+
+        <hr />
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+
+                <div class="mb-3 text-start">
+                    <label class="form-label">Card Number</label>
+                    <input class="form-control" placeholder="1234 5678 9012 3456" />
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="form-label">Card Holder</label>
+                    <input class="form-control" placeholder="John Doe" />
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <input class="form-control" placeholder="MM/YY" />
+                    </div>
+                    <div class="col">
+                        <input class="form-control" placeholder="CVV" />
+                    </div>
+                </div>
+
+                <form asp-action="PayNow" method="post" class="mt-4">
+                    <button class="btn btn-success w-100 btn-lg">
+                        ✅ Pay Now
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

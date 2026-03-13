@@ -1,0 +1,45 @@
+﻿{
+  "_id": { "$oid": "65f200000000000000000101" },
+  "orderNumber": "ORD-20260302-0001",
+  "userId": { "$oid": "65f300000000000000000901" },
+  "orderDate": { "$date": "2026-03-02T11:15:00Z" },
+  "status": "PLACED",
+  "items": [
+    {
+      "productId": { "$oid": "65f100000000000000000001" },
+      "sku": "ELEC-IPH15-128-BLK",
+      "name": "iPhone 15 128GB",
+      "unitPrice": 799.0,
+      "quantity": 1,
+      "lineTotal": 799.0
+    },
+    {
+      "productId": { "$oid": "65f100000000000000000002" },
+      "sku": "APP-TSHIRT-M-BLU",
+      "name": "Men's Cotton T-Shirt",
+      "unitPrice": 19.99,
+      "quantity": 2,
+      "lineTotal": 39.98
+    }
+  ],
+  "payment": {
+    "method": "CARD",
+    "transactionId": "txn_9A7X2",
+    "status": "PAID",
+    "paidAt": { "$date": "2026-03-02T11:16:20Z" }
+  },
+  "shippingAddress": {
+    "line1": "100 Main St",
+    "city": "Seattle",
+    "state": "WA",
+    "postalCode": "98101",
+    "country": "US"
+  },
+  "costSummary": {
+    "subtotal": 838.98,
+    "tax": 67.12,
+    "shipping": 0.0,
+    "discount": 20.0,
+    "total": 886.10
+  }
+}

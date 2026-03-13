@@ -1,0 +1,112 @@
+@model List<EcommerceApplication.Models.CartItem>
+
+@{
+    ViewData["Title"] = "My Cart";
+    decimal grandTotal = 0;
+
+    // ✅ Works with either Qty or Quantity
+    int GetQty(EcommerceApplication.Models.CartItem item)
+    {
+        var t = item.GetType();
+        var pQty = t.GetProperty("Qty");
+        if (pQty != null) return (int)(pQty.GetValue(item) ?? 0);
+
+        var pQuantity = t.GetProperty("Quantity");
+        if (pQuantity != null) return (int)(pQuantity.GetValue(item) ?? 0);
+
+        return 0;
+    }
+}
+
+<div class="container py-4">
+
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+        <div>
+            <h2 class="mb-0">🛒 My Cart</h2>
+            <div class="text-muted small">Review items before checkout</div>
+        </div>
+
+        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">
+            <i class="bi bi-arrow-left"></i> Continue Shopping
+        </a>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="card shadow-sm rounded-4">
+            <div class="card-body text-center py-5">
+                <div class="display-6 mb-2">😶‍🌫️</div>
+                <h5 class="mb-1">Your cart is empty</h5>
+                <p class="text-muted mb-3">Add some products to see them here.</p>
+                <a class="btn btn-primary" asp-controller="Home" asp-action="Index">
+                    Browse Products
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm rounded-4 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="min-width:220px;">Product</th>
+                            <th class="text-end" style="min-width:120px;">Price</th>
+                            <th class="text-center" style="min-width:80px;">Qty</th>
+                            <th class="text-end" style="min-width:140px;">Total</th>
+                            <th class="text-end" style="min-width:120px;"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var qty = GetQty(item);
+                        var price = item.Product?.Price ?? 0;
+                        var lineTotal = price * qty;
+                        grandTotal += lineTotal;
+
+                        <tr>
+                            <td>
+                                <div class="fw-semibold">@item.Product?.Name</div>
+                                <div class="text-muted small">@item.Product?.Category?.Name</div>
+                            </td>
+
+                            <td class="text-end">₹ @price</td>
+
+                            <td class="text-center">
+                                <span class="badge text-bg-secondary rounded-pill px-3 py-2">@qty</span>
+                            </td>
+
+                            <td class="text-end fw-semibold">₹ @lineTotal</td>
+
+                            <td class="text-end">
+                                <form asp-action="Remove" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <button class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i> Remove
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-footer bg-white">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <div class="fw-bold fs-5">
+                        Grand Total: <span class="text-success">₹ @grandTotal</span>
+                    </div>
+
+                    <a class="btn btn-primary" asp-controller="Checkout" asp-action="Payment">
+                    Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

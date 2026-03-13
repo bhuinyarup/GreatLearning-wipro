@@ -1,0 +1,23 @@
+﻿@page
+@model W4Day1AssignmentsSolution.Pages.Items.AddModel
+@{
+    ViewData["Title"] = "Add Item";
+}
+
+<h2>Add New Item</h2>
+
+<form method="post">
+    <div>
+        <label asp-for="InputItem"></label>
+        <input asp-for="InputItem" />
+        <span asp-validation-for="InputItem" class="text-danger"></span>
+    </div>
+    <br />
+    <button type="submit">Add Item</button>
+</form>
+
+<p><a asp-page="/Items/Index">Back to list</a></p>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

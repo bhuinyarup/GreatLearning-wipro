@@ -1,0 +1,12 @@
+C:\Users\rajha\Code\W2Day5AssignmentSolution\bin\Debug\net10.0\W2Day5AssignmentSolution.deps.json
+C:\Users\rajha\Code\W2Day5AssignmentSolution\bin\Debug\net10.0\W2Day5AssignmentSolution.dll
+C:\Users\rajha\Code\W2Day5AssignmentSolution\bin\Debug\net10.0\W2Day5AssignmentSolution.pdb
+C:\Users\rajha\Code\W2Day5AssignmentSolution\obj\Debug\net10.0\W2Day5AssignmentSolution.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rajha\Code\W2Day5AssignmentSolution\obj\Debug\net10.0\W2Day5AssignmentSolution.AssemblyInfoInputs.cache
+C:\Users\rajha\Code\W2Day5AssignmentSolution\obj\Debug\net10.0\W2Day5AssignmentSolution.AssemblyInfo.cs
+C:\Users\rajha\Code\W2Day5AssignmentSolution\obj\Debug\net10.0\W2Day5AssignmentSolution.csproj.CoreCompileInputs.cache
+C:\Users\rajha\Code\W2Day5AssignmentSolution\obj\Debug\net10.0\W2Day5AssignmentSolution.sourcelink.json
+C:\Users\rajha\Code\W2Day5AssignmentSolution\obj\Debug\net10.0\W2Day5AssignmentSolution.dll
+C:\Users\rajha\Code\W2Day5AssignmentSolution\obj\Debug\net10.0\refint\W2Day5AssignmentSolution.dll
+C:\Users\rajha\Code\W2Day5AssignmentSolution\obj\Debug\net10.0\W2Day5AssignmentSolution.pdb
+C:\Users\rajha\Code\W2Day5AssignmentSolution\obj\Debug\net10.0\ref\W2Day5AssignmentSolution.dll

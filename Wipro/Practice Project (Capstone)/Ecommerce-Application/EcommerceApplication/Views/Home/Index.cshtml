@@ -1,0 +1,120 @@
+﻿@model EcommerceApplication.ViewModels.HomeIndexVM
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container py-4">
+
+    <div class="p-4 p-md-5 mb-4 rounded-4 text-white" style="background: linear-gradient(135deg,#1d4ed8,#7c3aed);">
+        <div class="row align-items-center g-3">
+            <div class="col-md-8">
+                <h1 class="fw-bold mb-2">Shop smarter ✨</h1>
+                <p class="mb-3 opacity-90">Browse categories, pick products, add to cart, and checkout.</p>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="btn btn-light fw-semibold" asp-controller="Products" asp-action="Index">
+                        Browse Products
+                    </a>
+
+                    <a class="btn btn-outline-light fw-semibold" asp-controller="Cart" asp-action="Index">
+                        Cart <span class="badge bg-dark ms-1">@Model.CartCount</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-4 text-md-end">
+                <div class="bg-white bg-opacity-10 rounded-4 p-3">
+                    <div class="fw-semibold">Quick links</div>
+                    <div class="d-flex flex-column gap-1 mt-2">
+                        <a class="link-light text-decoration-none" asp-controller="Products" asp-action="Index">→ Products</a>
+                        <a class="link-light text-decoration-none" asp-controller="Cart" asp-action="Index">→ Cart</a>
+                        <a class="link-light text-decoration-none" asp-controller="Home" asp-action="Privacy">→ Privacy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between mb-2">
+        <h4 class="mb-0">Categories</h4>
+        <a class="text-decoration-none" asp-controller="Products" asp-action="Index">See all →</a>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 mb-4">
+        @foreach (var c in Model.Categories)
+        {
+            <a class="btn btn-outline-primary rounded-pill"
+               asp-controller="Products" asp-action="Index" asp-route-categoryId="@c.Id">
+                @c.Name
+            </a>
+        }
+        @if (!Model.Categories.Any())
+        {
+            <span class="text-muted">No categories yet. (Add from Admin → Categories)</span>
+        }
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between mb-2">
+        <h4 class="mb-0">Latest Products</h4>
+        <form class="d-flex gap-2" asp-controller="Products" asp-action="Index" method="get">
+            <input class="form-control" type="text" name="q" placeholder="Search products..." />
+            <button class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
+    <div class="row g-3">
+        @foreach (var p in Model.Products)
+        {
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                <div class="card h-100 shadow-sm rounded-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="fw-semibold">@p.Name</div>
+                                <div class="text-muted small">@p.Category?.Name</div>
+                            </div>
+                            <span class="badge text-bg-success">₹ @p.Price</span>
+                        </div>
+
+                        <p class="small mt-2 text-muted" style="min-height:40px;">
+                            @(string.IsNullOrWhiteSpace(p.Description) ? "No description" : p.Description)
+                        </p>
+
+                        <div class="d-flex gap-2 mt-3">
+                            <a class="btn btn-outline-secondary w-50"
+                               asp-controller="Products" asp-action="Index" asp-route-categoryId="@p.CategoryId">
+                                Similar
+                            </a>
+
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <form class="w-50" asp-controller="Cart" asp-action="Add" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="productId" value="@p.Id" />
+                                    <button class="btn btn-primary w-100">
+                                        <i class="bi bi-cart-plus me-1"></i> Add
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <a class="btn btn-primary w-50" asp-area="Identity" asp-page="/Account/Login">
+                                    Login to Add
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (!Model.Products.Any())
+        {
+            <div class="col-12">
+                <div class="alert alert-info rounded-4">
+                    No products found. Add products from Admin → Products.
+                </div>
+            </div>
+        }
+    </div>
+</div>

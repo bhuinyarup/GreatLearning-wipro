@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NEXMART — Shop Smart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#080810;--surface:#0f0f1a;--surface2:#161624;--surface3:#1e1e30;
+      --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+      --accent:#e84560;--accent-glow:rgba(232,69,96,0.25);
+      --gold:#f0a500;--gold-glow:rgba(240,165,0,0.2);
+      --teal:#00d4aa;--teal-glow:rgba(0,212,170,0.2);
+      --purple:#8b5cf6;
+      --text:#eeeef5;--text-muted:#7070a0;--text-dim:#4a4a6a;
+      --success:#00c896;--warning:#f59e0b;--danger:#ef4444;
+      --font-display:'Syne',sans-serif;--font-body:'Instrument Sans',sans-serif;
+      --radius:14px;--radius-sm:8px;--radius-lg:20px;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.6;overflow-x:hidden;min-height:100vh}
+
+    /* GRAIN */
+    body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:.5}
+
+    /* ── NAV ── */
+    nav{position:sticky;top:0;z-index:200;height:58px;backdrop-filter:blur(24px);
+      background:rgba(8,8,16,0.88);border-bottom:1px solid var(--border);
+      display:flex;align-items:center;padding:0 1.75rem;gap:0}
+    .nav-logo{font-family:var(--font-display);font-size:1.55rem;font-weight:800;
+      letter-spacing:2px;color:var(--text);margin-right:auto;cursor:pointer}
+    .nav-logo span{color:var(--accent)}
+    .nav-btn{background:none;border:none;cursor:pointer;font-family:var(--font-body);
+      font-size:.78rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;
+      color:var(--text-muted);padding:.4rem .85rem;transition:color .2s;position:relative;white-space:nowrap}
+    .nav-btn::after{content:'';position:absolute;bottom:-1px;left:.85rem;right:.85rem;
+      height:2px;background:var(--accent);transform:scaleX(0);transition:transform .2s;border-radius:2px}
+    .nav-btn:hover{color:var(--text)}.nav-btn:hover::after,.nav-btn.active::after{transform:scaleX(1)}
+    .nav-btn.active{color:var(--text)}
+    .nav-btn.gold-btn{color:var(--gold)}.nav-btn.gold-btn::after{background:var(--gold)}
+    .nav-pill{background:var(--accent);color:white;border-radius:999px;padding:1px 7px;
+      font-size:.65rem;font-weight:700;margin-left:4px;vertical-align:middle}
+    .nav-pill.gold{background:var(--gold);color:#1a0800}
+    .nav-sep{width:1px;height:20px;background:var(--border);margin:0 .25rem}
+    .nav-user-info{display:flex;align-items:center;gap:.6rem;padding:.25rem .75rem;
+      background:var(--surface2);border:1px solid var(--border);border-radius:999px;
+      font-size:.78rem;color:var(--text-muted);margin-left:.5rem}
+    .nav-user-info strong{color:var(--text);font-weight:600}
+    .nav-logout{background:none;border:1px solid var(--border);border-radius:999px;
+      padding:.3rem .85rem;font-size:.72rem;font-weight:600;color:var(--text-muted);
+      cursor:pointer;transition:all .2s;letter-spacing:.5px;margin-left:.5rem}
+    .nav-logout:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* ── PAGES ── */
+    .page{display:none;min-height:calc(100vh - 58px);animation:fadeUp .35s ease}
+    .page.active{display:block}
+    .page-flex{display:none;min-height:calc(100vh - 58px);align-items:center;justify-content:center}
+    .page-flex.active{display:flex;animation:fadeUp .35s ease}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── LANDING / ROLE SELECT ── */
+    .landing{min-height:calc(100vh - 58px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center}
+    .landing-eyebrow{font-size:.72rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:1.25rem;display:flex;align-items:center;justify-content:center;gap:.75rem}
+    .landing-eyebrow::before,.landing-eyebrow::after{content:'';display:block;width:2rem;height:1px;background:var(--accent)}
+    .landing-title{font-family:var(--font-display);font-size:clamp(3rem,7vw,6rem);font-weight:800;line-height:.92;letter-spacing:2px;margin-bottom:1.5rem}
+    .landing-title em{font-style:normal;color:var(--accent)}
+    .landing-sub{color:var(--text-muted);max-width:440px;margin:0 auto 3rem;font-size:.95rem}
+    .role-cards{display:flex;gap:1.25rem;flex-wrap:wrap;justify-content:center}
+    .role-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+      padding:2rem 2.5rem;cursor:pointer;transition:all .3s;min-width:220px;text-align:center}
+    .role-card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 24px 60px var(--accent-glow)}
+    .role-card.gold:hover{border-color:var(--gold);box-shadow:0 24px 60px var(--gold-glow)}
+    .role-icon{font-size:3rem;margin-bottom:1rem;display:block}
+    .role-label{font-family:var(--font-display);font-size:1.4rem;font-weight:700;letter-spacing:2px;margin-bottom:.5rem}
+    .role-desc{font-size:.82rem;color:var(--text-muted)}
+
+    /* ── LOGIN FORMS ── */
+    .auth-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+      padding:2.5rem;width:min(420px,90vw);box-shadow:0 40px 80px rgba(0,0,0,.4)}
+    .auth-box.admin-box{border-color:rgba(240,165,0,.2);box-shadow:0 40px 80px var(--gold-glow)}
+    .auth-icon{font-size:2.5rem;text-align:center;margin-bottom:.75rem}
+    .auth-title{font-family:var(--font-display);font-size:2rem;font-weight:800;letter-spacing:2px;text-align:center;margin-bottom:.35rem}
+    .auth-title span{color:var(--accent)}
+    .auth-title.gold span{color:var(--gold)}
+    .auth-sub{text-align:center;color:var(--text-muted);font-size:.82rem;margin-bottom:1.75rem}
+    .hint-box{background:rgba(240,165,0,.07);border:1px solid rgba(240,165,0,.15);border-radius:var(--radius-sm);
+      padding:.65rem 1rem;font-size:.77rem;color:var(--gold);text-align:center;margin-bottom:1.25rem}
+    .back-link{text-align:center;margin-top:1.25rem;font-size:.82rem;color:var(--text-muted)}
+    .back-link a{color:var(--accent);cursor:pointer;text-decoration:none;font-weight:600}
+    .back-link a:hover{text-decoration:underline}
+
+    /* ── MAIN LAYOUT ── */
+    .wrap{max-width:1180px;margin:0 auto;padding:2rem 1.75rem}
+    .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+    .page-title{font-family:var(--font-display);font-size:2.2rem;font-weight:800;letter-spacing:2px}
+    .page-title span{color:var(--accent)}
+
+    /* ── PRODUCTS GRID ── */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.1rem}
+    .product-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      overflow:hidden;transition:all .25s}
+    .product-card:hover{transform:translateY(-4px);border-color:rgba(232,69,96,.3);box-shadow:0 16px 50px var(--accent-glow)}
+    .product-card-thumb{height:150px;background:var(--surface2);display:flex;align-items:center;
+      justify-content:center;font-size:3.2rem;position:relative}
+    .stock-tag{position:absolute;top:.65rem;right:.65rem;border-radius:999px;padding:2px 9px;
+      font-size:.68rem;font-weight:700;letter-spacing:.5px;z-index:1}
+    .stock-tag.in{background:rgba(0,200,150,.12);color:var(--success);border:1px solid rgba(0,200,150,.2)}
+    .stock-tag.low{background:rgba(245,158,11,.1);color:var(--warning);border:1px solid rgba(245,158,11,.2)}
+    .stock-tag.out{background:rgba(239,68,68,.1);color:var(--danger);border:1px solid rgba(239,68,68,.2)}
+    .product-body{padding:1.1rem}
+    .product-name{font-weight:600;font-size:.95rem;margin-bottom:.2rem}
+    .product-desc{color:var(--text-muted);font-size:.8rem;margin-bottom:.9rem;line-height:1.45;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .product-foot{display:flex;align-items:center;justify-content:space-between}
+    .product-price{font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--teal)}
+    .product-price small{font-size:.65rem;font-family:var(--font-body);color:var(--text-muted);font-weight:400}
+
+    /* ── CUSTOMERS TABLE ── */
+    .data-table{width:100%;border-collapse:collapse}
+    .data-table th{text-align:left;padding:.7rem 1rem;font-size:.7rem;letter-spacing:2px;
+      text-transform:uppercase;color:var(--text-dim);border-bottom:1px solid var(--border)}
+    .data-table td{padding:.8rem 1rem;border-bottom:1px solid var(--border);font-size:.88rem}
+    .data-table tr:hover td{background:var(--surface2)}
+    .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--purple));
+      display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:white;flex-shrink:0}
+    .id-chip{background:var(--surface2);border:1px solid var(--border);border-radius:6px;
+      padding:1px 7px;font-size:.7rem;font-family:monospace;color:var(--text-muted)}
+    .cell-user{display:flex;align-items:center;gap:.65rem}
+
+    /* ── CART ── */
+    .cart-wrap{max-width:760px}
+    .cart-item{display:grid;grid-template-columns:56px 1fr auto auto;align-items:center;gap:1rem;
+      background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1rem 1.1rem;margin-bottom:.65rem;transition:border-color .2s}
+    .cart-item:hover{border-color:rgba(232,69,96,.2)}
+    .cart-thumb{width:56px;height:56px;background:var(--surface2);border-radius:10px;
+      display:flex;align-items:center;justify-content:center;font-size:1.8rem}
+    .cart-name{font-weight:600;font-size:.9rem}
+    .cart-sub{font-size:.78rem;color:var(--text-muted)}
+    .cart-qty{font-family:var(--font-display);font-size:1.1rem;color:var(--teal);text-align:right}
+    .cart-qty small{display:block;font-family:var(--font-body);font-size:.68rem;color:var(--text-muted)}
+    .cart-total-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;margin-top:1.25rem}
+    .total-label{font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
+    .total-amount{font-family:var(--font-display);font-size:2.2rem;color:var(--accent)}
+    .cart-empty-state{text-align:center;padding:4rem 2rem;color:var(--text-muted)}
+    .cart-empty-state .big-icon{font-size:4rem;margin-bottom:1rem}
+    .cart-empty-state h3{font-family:var(--font-display);font-size:1.8rem;letter-spacing:2px;color:var(--text);margin-bottom:.5rem}
+
+    /* ── ORDERS ── */
+    .order-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:.9rem}
+    .order-head{background:var(--surface2);padding:.9rem 1.25rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+    .order-num{font-family:var(--font-display);font-size:1.1rem;letter-spacing:1px}
+    .order-meta{font-size:.75rem;color:var(--text-muted)}
+    .order-amount{font-family:var(--font-display);font-size:1.3rem;color:var(--accent)}
+    .order-rows{padding:.9rem 1.25rem}
+    .order-row{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.85rem}
+    .order-row:last-child{border:none}
+    .order-addr{padding:.65rem 1.25rem .9rem;font-size:.8rem;color:var(--text-muted);background:rgba(0,212,170,.02);border-top:1px solid var(--border)}
+
+    /* ── ADMIN DASHBOARD ── */
+    .admin-welcome{background:linear-gradient(135deg,rgba(240,165,0,.08),rgba(240,165,0,.02));
+      border:1px solid rgba(240,165,0,.15);border-radius:var(--radius-lg);padding:1.75rem 2rem;
+      display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+    .admin-welcome-text h2{font-family:var(--font-display);font-size:1.8rem;color:var(--gold);letter-spacing:2px}
+    .admin-welcome-text p{color:var(--text-muted);font-size:.85rem;margin-top:.25rem}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+    .stat-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;text-align:center}
+    .stat-box strong{display:block;font-family:var(--font-display);font-size:2rem;color:var(--gold)}
+    .stat-box span{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim)}
+    .admin-actions{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+    .action-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1.5rem;transition:all .25s;cursor:pointer}
+    .action-card:hover{border-color:rgba(240,165,0,.3);transform:translateY(-3px);box-shadow:0 12px 40px var(--gold-glow)}
+    .action-icon{font-size:2rem;margin-bottom:.75rem}
+    .action-title{font-family:var(--font-display);font-size:1.1rem;letter-spacing:1px;margin-bottom:.35rem}
+    .action-desc{font-size:.8rem;color:var(--text-muted)}
+
+    /* ── MANAGE PRODUCTS LIST ── */
+    .manage-row{display:flex;align-items:center;gap:.75rem;background:var(--surface2);
+      border:1px solid var(--border);border-radius:var(--radius-sm);padding:.75rem 1rem;margin-bottom:.5rem}
+    .manage-row-info{flex:1}
+    .manage-row-name{font-weight:600;font-size:.88rem}
+    .manage-row-sub{font-size:.75rem;color:var(--text-muted)}
+    .manage-row-price{font-family:var(--font-display);font-size:1rem;color:var(--teal);margin-right:.75rem}
+
+    /* ── CONTACT PAGE ── */
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+    .contact-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem}
+    .contact-card h3{font-family:var(--font-display);font-size:1.4rem;letter-spacing:1px;margin-bottom:1.25rem;color:var(--accent)}
+    .contact-item{display:flex;align-items:flex-start;gap:.85rem;margin-bottom:1.1rem}
+    .contact-icon{font-size:1.3rem;flex-shrink:0;margin-top:.1rem}
+    .contact-label{font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:.2rem}
+    .contact-val{font-size:.9rem;color:var(--text)}
+    .contact-val a{color:var(--teal);text-decoration:none}.contact-val a:hover{text-decoration:underline}
+    .contact-form-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem}
+    .contact-form-card h3{font-family:var(--font-display);font-size:1.4rem;letter-spacing:1px;margin-bottom:1.25rem;color:var(--teal)}
+    .map-placeholder{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);
+      height:160px;display:flex;align-items:center;justify-content:center;flex-direction:column;
+      gap:.5rem;color:var(--text-muted);font-size:.85rem;margin-top:1rem}
+
+    /* ── ABOUT PAGE ── */
+    .about-hero{background:linear-gradient(135deg,rgba(232,69,96,.07),rgba(139,92,246,.05));
+      border:1px solid var(--border);border-radius:var(--radius-lg);padding:3rem;text-align:center;margin-bottom:2rem}
+    .about-hero h2{font-family:var(--font-display);font-size:2.5rem;letter-spacing:3px;margin-bottom:.75rem}
+    .about-hero p{color:var(--text-muted);max-width:560px;margin:0 auto;line-height:1.7}
+    .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:2rem}
+    .team-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1.5rem;text-align:center;transition:all .25s}
+    .team-card:hover{transform:translateY(-4px);border-color:rgba(232,69,96,.25);box-shadow:0 16px 40px var(--accent-glow)}
+    .team-avatar{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--purple));
+      display:flex;align-items:center;justify-content:center;font-family:var(--font-display);
+      font-size:1.6rem;color:white;margin:0 auto 1rem}
+    .team-name{font-family:var(--font-display);font-size:1rem;letter-spacing:1px;margin-bottom:.3rem}
+    .team-role{font-size:.75rem;color:var(--text-muted);letter-spacing:.5px}
+    .team-icon{font-size:1.1rem;margin-top:.5rem;display:block}
+    .about-mission{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+      padding:2rem;margin-bottom:2rem}
+    .about-mission h3{font-family:var(--font-display);font-size:1.5rem;letter-spacing:2px;color:var(--teal);margin-bottom:1rem}
+    .about-mission p{color:var(--text-muted);line-height:1.75;margin-bottom:.75rem}
+
+    /* ── FORMS & BUTTONS ── */
+    .form-group{margin-bottom:1rem}
+    label{display:block;font-size:.72rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:.4rem}
+    input,select,textarea{width:100%;padding:.65rem .9rem;background:var(--bg);border:1px solid var(--border);
+      border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-body);font-size:.88rem;transition:all .2s}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:rgba(232,69,96,.4);box-shadow:0 0 0 3px rgba(232,69,96,.08)}
+    textarea{resize:vertical;min-height:90px}
+    select option{background:var(--surface)}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+    .modal-actions{display:flex;gap:.65rem;justify-content:flex-end;margin-top:1.4rem}
+
+    .btn{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem 1.35rem;border-radius:var(--radius-sm);
+      font-family:var(--font-body);font-weight:600;font-size:.82rem;letter-spacing:.4px;cursor:pointer;border:none;transition:all .2s}
+    .btn-primary{background:var(--accent);color:white;box-shadow:0 4px 16px var(--accent-glow)}
+    .btn-primary:hover{background:#d63550;transform:translateY(-1px)}
+    .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+    .btn-secondary:hover{border-color:var(--border2)}
+    .btn-ghost{background:none;color:var(--accent);border:1px solid rgba(232,69,96,.25)}
+    .btn-ghost:hover{background:rgba(232,69,96,.08)}
+    .btn-teal{background:var(--teal);color:#001a14;box-shadow:0 4px 16px var(--teal-glow)}
+    .btn-teal:hover{background:#00e5b8;transform:translateY(-1px)}
+    .btn-gold{background:var(--gold);color:#1a0800;box-shadow:0 4px 16px var(--gold-glow);font-weight:700}
+    .btn-gold:hover{background:#fbbf24;transform:translateY(-1px)}
+    .btn-danger{background:var(--danger);color:white}
+    .btn-sm{padding:.35rem .85rem;font-size:.75rem}
+    .btn-block{width:100%;justify-content:center;margin-top:.5rem}
+    .icon-btn{width:34px;height:34px;border-radius:var(--radius-sm);border:1px solid var(--border);
+      background:var(--surface2);cursor:pointer;display:flex;align-items:center;justify-content:center;
+      transition:all .2s;font-size:.9rem}
+    .icon-btn:hover{background:var(--accent);border-color:var(--accent);transform:scale(1.08)}
+
+    /* ── MODAL ── */
+    .overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);
+      display:none;align-items:center;justify-content:center;animation:fadeIn .2s ease}
+    .overlay.open{display:flex}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    .modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);
+      padding:1.75rem;width:min(500px,92vw);animation:slideUp .25s ease;max-height:88vh;overflow-y:auto}
+    .modal.wide{width:min(620px,92vw)}
+    @keyframes slideUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .modal-title{font-family:var(--font-display);font-size:1.6rem;font-weight:700;letter-spacing:2px;margin-bottom:1.35rem}
+    .modal-title span{color:var(--accent)}
+    .modal-title.gold span{color:var(--gold)}
+
+    /* ── ORDER SUCCESS POPUP ── */
+    .success-overlay{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.85);
+      backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center}
+    .success-overlay.open{display:flex;animation:fadeIn .3s ease}
+    .success-box{background:var(--surface);border:1px solid rgba(0,200,150,.25);border-radius:24px;
+      padding:3rem 2.5rem;width:min(480px,90vw);text-align:center;
+      box-shadow:0 0 80px rgba(0,200,150,.15);animation:successPop .4s cubic-bezier(.175,.885,.32,1.275)}
+    @keyframes successPop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+    .success-icon{font-size:5rem;margin-bottom:1rem;display:block;animation:bounce .5s ease .3s both}
+    @keyframes bounce{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+    .success-title{font-family:var(--font-display);font-size:2.5rem;font-weight:800;letter-spacing:3px;
+      color:var(--success);margin-bottom:.75rem}
+    .success-sub{color:var(--text-muted);font-size:.9rem;margin-bottom:.5rem;line-height:1.6}
+    .success-amount{font-family:var(--font-display);font-size:2rem;color:var(--teal);margin:1rem 0}
+    .success-addr{font-size:.8rem;color:var(--text-dim);margin-bottom:1.75rem}
+    .confetti{position:absolute;pointer-events:none}
+
+    /* ── SEARCH ── */
+    .search-wrap{position:relative;margin-bottom:1.5rem}
+    .search-wrap input{padding-left:2.4rem}
+    .search-ic{position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:var(--text-dim);pointer-events:none;font-size:.9rem}
+
+    /* ── MISC ── */
+    .loader{display:flex;align-items:center;justify-content:center;padding:3.5rem;gap:.65rem;color:var(--text-muted)}
+    .spin{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--accent);animation:spin .6s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .empty-state{text-align:center;padding:3rem;color:var(--text-muted)}
+    .empty-state .ei{font-size:2.8rem;display:block;margin-bottom:.65rem}
+    .divider{height:1px;background:var(--border);margin:1.5rem 0}
+    #toasts{position:fixed;bottom:1.75rem;right:1.75rem;display:flex;flex-direction:column;gap:.65rem;z-index:9000}
+    .toast{min-width:240px;max-width:340px;background:var(--surface);border:1px solid var(--border);
+      border-left:3px solid var(--success);border-radius:var(--radius-sm);padding:.75rem 1.1rem;
+      font-size:.83rem;font-weight:500;animation:slideR .3s ease;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+    .toast.error{border-left-color:var(--accent)}.toast.warning{border-left-color:var(--warning)}
+    @keyframes slideR{from{transform:translateX(110%);opacity:0}to{transform:translateX(0);opacity:1}}
+    @media(max-width:768px){
+      .contact-grid{grid-template-columns:1fr}.stats-row{grid-template-columns:1fr 1fr}
+      .form-row{grid-template-columns:1fr}.nav-btn span{display:none}.landing-title{font-size:3rem}
+      .team-grid{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="goHome()">NEX<span>MART</span></div>
+  <div id="nav-guest" style="display:flex;align-items:center;gap:0">
+    <button class="nav-btn" onclick="goHome()">🏠 <span>Home</span></button>
+    <button class="nav-btn" onclick="showPage('about')">🏢 <span>About</span></button>
+    <button class="nav-btn" onclick="showPage('contact')">📬 <span>Contact</span></button>
+  </div>
+  <div id="nav-customer" style="display:none;align-items:center;gap:0">
+    <button class="nav-btn active" id="cnav-products" onclick="showPage('products')"><span>Products</span></button>
+    <button class="nav-btn" id="cnav-cart" onclick="showPage('cart')"><span>Cart</span><span class="nav-pill" id="cart-badge" style="display:none">0</span></button>
+    <button class="nav-btn" id="cnav-orders" onclick="showPage('my-orders')"><span>My Orders</span></button>
+    <button class="nav-btn" id="cnav-about" onclick="showPage('about')"><span>About</span></button>
+    <button class="nav-btn" id="cnav-contact" onclick="showPage('contact')"><span>Contact</span></button>
+    <div class="nav-sep"></div>
+    <div class="nav-user-info" id="cust-name-badge"><span>👤</span><strong id="cust-display-name">Customer</strong></div>
+    <button class="nav-logout" onclick="logout()">Logout</button>
+  </div>
+  <div id="nav-admin" style="display:none;align-items:center;gap:0">
+    <button class="nav-btn gold-btn active" id="anav-dash" onclick="showPage('admin')"><span>Dashboard</span></button>
+    <button class="nav-btn gold-btn" id="anav-products" onclick="showPage('products')"><span>Products</span></button>
+    <button class="nav-btn gold-btn" id="anav-customers" onclick="showPage('customers')"><span>Customers</span></button>
+    <button class="nav-btn gold-btn" id="anav-orders" onclick="showPage('all-orders')"><span>Orders</span></button>
+    <button class="nav-btn" id="anav-about" onclick="showPage('about')"><span>About</span></button>
+    <button class="nav-btn" id="anav-contact" onclick="showPage('contact')"><span>Contact</span></button>
+    <div class="nav-sep"></div>
+    <div class="nav-user-info"><span>⚙️</span><strong style="color:var(--gold)">Admin</strong><span class="nav-pill gold">ADMIN</span></div>
+    <button class="nav-logout" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<!-- LANDING PAGE -->
+<div class="page active" id="page-landing">
+  <div class="landing">
+    <div class="landing-eyebrow">Welcome to NEXMART</div>
+    <h1 class="landing-title">SHOP THE<br><em>FUTURE</em><br>TODAY</h1>
+    <p class="landing-sub">India's next-generation ecommerce platform. Browse thousands of products with real-time inventory and seamless checkout.</p>
+    <div class="role-cards">
+      <div class="role-card" onclick="showPage('customer-login')">
+        <span class="role-icon">🛍️</span>
+        <div class="role-label">CUSTOMER</div>
+        <div class="role-desc">Browse products, manage cart & place orders</div>
+      </div>
+      <div class="role-card gold" onclick="showPage('admin-login')">
+        <span class="role-icon">⚙️</span>
+        <div class="role-label" style="color:var(--gold)">ADMIN</div>
+        <div class="role-desc">Manage products, customers & view all orders</div>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem;display:flex;gap:1.5rem;justify-content:center">
+      <button class="btn btn-secondary" onclick="showPage('about')">About Us</button>
+      <button class="btn btn-ghost" onclick="showPage('contact')">Contact Us</button>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOMER LOGIN -->
+<div class="page-flex" id="page-customer-login">
+  <div class="auth-box">
+    <div class="auth-icon">🛍️</div>
+    <h2 class="auth-title">CUSTOMER <span>LOGIN</span></h2>
+    <p class="auth-sub">Sign in to browse products and place orders</p>
+    <div class="form-group"><label>Customer ID</label><input id="cl-id" type="number" placeholder="Enter your Customer ID" onkeydown="if(event.key==='Enter')customerLogin()"/></div>
+    <div class="form-group"><label>Email</label><input id="cl-email" type="email" placeholder="your@email.com" onkeydown="if(event.key==='Enter')customerLogin()"/></div>
+    <button class="btn btn-primary btn-block" onclick="customerLogin()">🛍️ Sign In</button>
+    <div class="back-link"><a onclick="showPage('landing')">← Back to Home</a> &nbsp;·&nbsp; <a onclick="showPage('contact')">Need help?</a></div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="page-flex" id="page-admin-login">
+  <div class="auth-box admin-box">
+    <div class="auth-icon">🔐</div>
+    <h2 class="auth-title gold">ADMIN <span>ACCESS</span></h2>
+    <p class="auth-sub">Restricted area — authorised personnel only</p>
+    <div class="hint-box">Default: <strong>admin</strong> / <strong>admin123</strong></div>
+    <div class="form-group"><label>Username</label><input id="al-user" placeholder="admin" onkeydown="if(event.key==='Enter')adminLogin()"/></div>
+    <div class="form-group"><label>Password</label><input id="al-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()"/></div>
+    <button class="btn btn-gold btn-block" onclick="adminLogin()">🔓 Login as Admin</button>
+    <div class="back-link"><a onclick="showPage('landing')">← Back to Home</a></div>
+  </div>
+</div>
+
+<!-- PRODUCTS PAGE -->
+<div class="page" id="page-products">
+  <div class="wrap">
+    <div class="page-header">
+      <h1 class="page-title">PRO<span>DUCTS</span></h1>
+      <button class="btn btn-gold" id="btn-add-product" style="display:none" onclick="openModal('modal-product')">+ Add Product</button>
+    </div>
+    <div class="search-wrap"><span class="search-ic">🔍</span><input type="text" id="product-search" placeholder="Search products…" oninput="filterProducts()"></div>
+    <div id="products-grid" class="grid"><div class="loader"><div class="spin"></div>Loading products…</div></div>
+  </div>
+</div>
+
+<!-- CUSTOMERS PAGE (Admin only) -->
+<div class="page" id="page-customers">
+  <div class="wrap">
+    <div class="page-header">
+      <h1 class="page-title">CUSTO<span>MERS</span></h1>
+      <button class="btn btn-gold" onclick="openModal('modal-customer')">+ Register Customer</button>
+    </div>
+    <div id="customers-list"><div class="loader"><div class="spin"></div>Loading…</div></div>
+  </div>
+</div>
+
+<!-- CART PAGE (Customer only) -->
+<div class="page" id="page-cart">
+  <div class="wrap">
+    <div class="page-header"><h1 class="page-title">MY <span>CART</span></h1></div>
+    <div class="cart-wrap" id="cart-content">
+      <div class="cart-empty-state"><div class="big-icon">🛒</div><h3>YOUR CART IS EMPTY</h3><p>Add products to get started.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- MY ORDERS (Customer) -->
+<div class="page" id="page-my-orders">
+  <div class="wrap">
+    <div class="page-header"><h1 class="page-title">MY <span>ORDERS</span></h1></div>
+    <div id="my-orders-list"><div class="loader"><div class="spin"></div>Loading…</div></div>
+  </div>
+</div>
+
+<!-- ALL ORDERS (Admin) -->
+<div class="page" id="page-all-orders">
+  <div class="wrap">
+    <div class="page-header"><h1 class="page-title">ALL <span>ORDERS</span></h1>
+      <select id="orders-cust-sel" onchange="loadAllOrders()" style="width:200px"><option value="">All Customers…</option></select>
+    </div>
+    <div id="all-orders-list"><div class="empty-state"><span class="ei">📋</span>Select a customer to view orders</div></div>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div class="page" id="page-admin">
+  <div class="wrap">
+    <div class="admin-welcome">
+      <div class="admin-welcome-text">
+        <h2>⚙️ ADMIN DASHBOARD</h2>
+        <p>Full platform control — all changes reflect immediately in the database</p>
+      </div>
+      <button class="btn btn-gold" onclick="loadAdminStats()">↻ Refresh Stats</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat-box"><strong id="as-products">—</strong><span>Products</span></div>
+      <div class="stat-box"><strong id="as-customers">—</strong><span>Customers</span></div>
+      <div class="stat-box"><strong id="as-stock">—</strong><span>Total Stock</span></div>
+      <div class="stat-box"><strong id="as-value">—</strong><span>Catalog Value</span></div>
+    </div>
+    <div class="admin-actions">
+      <div class="action-card" onclick="showPage('products');document.getElementById('btn-add-product').click()">
+        <div class="action-icon">📦</div><div class="action-title">ADD PRODUCT</div><div class="action-desc">Add new product to the catalog with price & stock</div>
+      </div>
+      <div class="action-card" onclick="openManageProducts()">
+        <div class="action-icon">✏️</div><div class="action-title">MANAGE PRODUCTS</div><div class="action-desc">Edit prices, stock quantities or delete products</div>
+      </div>
+      <div class="action-card" onclick="showPage('customers')">
+        <div class="action-icon">👥</div><div class="action-title">CUSTOMERS</div><div class="action-desc">View, register or remove customer accounts</div>
+      </div>
+      <div class="action-card" onclick="showPage('all-orders')">
+        <div class="action-icon">📋</div><div class="action-title">VIEW ORDERS</div><div class="action-desc">Browse orders placed by all customers</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div class="page" id="page-about">
+  <div class="wrap">
+    <div class="about-hero">
+      <h2>ABOUT <span style="color:var(--accent)">NEXMART</span></h2>
+      <p>Built by a passionate team of engineers and designers, NEXMART is a next-generation ecommerce platform engineered for India's digital marketplace. We believe shopping should be fast, seamless, and delightful.</p>
+    </div>
+    <div class="about-mission">
+      <h3>OUR MISSION</h3>
+      <p>To democratise online commerce by giving every business — from solo entrepreneurs to large enterprises — access to a robust, scalable, and beautiful digital storefront backed by enterprise-grade SQL Server infrastructure.</p>
+      <p>NEXMART was built as a full-stack Web API case study demonstrating best practices in .NET 8, RESTful architecture, ADO.NET database interaction, clean architecture patterns, and modern UI design.</p>
+    </div>
+    <h2 class="page-title" style="margin-bottom:1.25rem">THE <span>TEAM</span></h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">AS</div>
+        <div class="team-name">AAKASH DEEP SAH</div>
+        <div class="team-role">Team Leader</div>
+        <span class="team-icon">🚀</span>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,var(--teal),#005f52)">SP</div>
+        <div class="team-name">SWASTIK PADHY</div>
+        <div class="team-role">Database Manager</div>
+        <span class="team-icon">🗄️</span>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,var(--purple),#4a1fa8)">RB</div>
+        <div class="team-name">RUPAYAN BHUNIA</div>
+        <div class="team-role">UI / UX Designer</div>
+        <span class="team-icon">🎨</span>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,var(--gold),#a05c00)">KK</div>
+        <div class="team-name">KETAN KUMAR</div>
+        <div class="team-role">Customer Relations</div>
+        <span class="team-icon">🤝</span>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#22c55e,#065f46)">HR</div>
+        <div class="team-name">HARSH RAJ</div>
+        <div class="team-role">Cyber Security</div>
+        <span class="team-icon">🔒</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT PAGE -->
+<div class="page" id="page-contact">
+  <div class="wrap">
+    <div class="page-header"><h1 class="page-title">CONTACT <span>US</span></h1></div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-card" style="margin-bottom:1rem">
+          <h3>📍 HEAD OFFICE</h3>
+          <div class="contact-item">
+            <span class="contact-icon">🏢</span>
+            <div>
+              <div class="contact-label">Address</div>
+              <div class="contact-val">NEXMART Technologies Pvt. Ltd.<br>Tower B, 4th Floor, Cyber Hub,<br>DLF Cyber City, Sector 24,<br>Gurugram, Haryana — 122002</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <div>
+              <div class="contact-label">Phone</div>
+              <div class="contact-val"><a href="tel:+911244567890">+91 124 456 7890</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📧</span>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-val"><a href="mailto:support@nexmart.in">support@nexmart.in</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">💼</span>
+            <div>
+              <div class="contact-label">Business Enquiries</div>
+              <div class="contact-val"><a href="mailto:business@nexmart.in">business@nexmart.in</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">🕐</span>
+            <div>
+              <div class="contact-label">Working Hours</div>
+              <div class="contact-val">Mon – Sat: 9:00 AM – 7:00 PM IST</div>
+            </div>
+          </div>
+          <div class="map-placeholder">
+            <span style="font-size:2rem">🗺️</span>
+            <span>Cyber Hub, Gurugram, Haryana</span>
+            <a href="https://maps.google.com/?q=Cyber+Hub+Gurugram" target="_blank" style="color:var(--teal);font-size:.78rem">Open in Google Maps →</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-card">
+        <h3>💬 SEND US A MESSAGE</h3>
+        <div class="form-group"><label>Your Name</label><input id="cf-name" placeholder="Full name"/></div>
+        <div class="form-group"><label>Email</label><input id="cf-email" type="email" placeholder="your@email.com"/></div>
+        <div class="form-group"><label>Subject</label>
+          <select id="cf-subject">
+            <option value="">Select a topic…</option>
+            <option>Order Issue</option><option>Product Enquiry</option>
+            <option>Account Help</option><option>Business Partnership</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea id="cf-msg" placeholder="How can we help you?"></textarea></div>
+        <button class="btn btn-teal btn-block" onclick="sendContact()">📨 Send Message</button>
+        <div style="margin-top:1rem;font-size:.78rem;color:var(--text-dim);text-align:center">We typically respond within 24 business hours.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+
+<!-- Add/Edit Product -->
+<div class="overlay" id="modal-product" onclick="closeOverlay(event,'modal-product')">
+  <div class="modal">
+    <h2 class="modal-title gold">ADD <span>PRODUCT</span></h2>
+    <div class="form-group"><label>Product Name</label><input id="p-name" placeholder="e.g. Wireless Headphones"/></div>
+    <div class="form-row">
+      <div class="form-group"><label>Price (₹)</label><input id="p-price" type="number" step="0.01" placeholder="999.00"/></div>
+      <div class="form-group"><label>Stock Qty</label><input id="p-stock" type="number" placeholder="50"/></div>
+    </div>
+    <div class="form-group"><label>Description</label><textarea id="p-desc" placeholder="Brief description…"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-product')">Cancel</button>
+      <button class="btn btn-gold" onclick="createProduct()">Create Product</button>
+    </div>
+  </div>
+</div>
+
+<!-- Register Customer -->
+<div class="overlay" id="modal-customer" onclick="closeOverlay(event,'modal-customer')">
+  <div class="modal">
+    <h2 class="modal-title">REGISTER <span>CUSTOMER</span></h2>
+    <div class="form-group"><label>Full Name</label><input id="c-name" placeholder="e.g. Priya Sharma"/></div>
+    <div class="form-group"><label>Email</label><input id="c-email" type="email" placeholder="priya@email.com"/></div>
+    <div class="form-group"><label>Password</label><input id="c-password" type="password" placeholder="Secure password"/></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-customer')">Cancel</button>
+      <button class="btn btn-primary" onclick="createCustomer()">Register</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add to Cart -->
+<div class="overlay" id="modal-add-cart" onclick="closeOverlay(event,'modal-add-cart')">
+  <div class="modal">
+    <h2 class="modal-title">ADD TO <span>CART</span></h2>
+    <input type="hidden" id="atc-pid"/>
+    <div id="atc-product-info" style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.85rem 1rem;margin-bottom:1rem;font-size:.88rem;"></div>
+    <div class="form-group"><label>Quantity</label><input id="atc-qty" type="number" value="1" min="1"/></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-add-cart')">Cancel</button>
+      <button class="btn btn-primary" onclick="addToCart()">Add to Cart 🛒</button>
+    </div>
+  </div>
+</div>
+
+<!-- Place Order -->
+<div class="overlay" id="modal-order" onclick="closeOverlay(event,'modal-order')">
+  <div class="modal">
+    <h2 class="modal-title">PLACE <span>ORDER</span></h2>
+    <div id="order-summary" style="margin-bottom:1rem;font-size:.85rem;color:var(--text-muted);"></div>
+    <div class="form-group"><label>Shipping Address</label><textarea id="order-addr" placeholder="House No., Street, City, State, PIN Code"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-order')">Cancel</button>
+      <button class="btn btn-teal" onclick="placeOrder()">✓ Confirm Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- Manage Products (Admin) -->
+<div class="overlay" id="modal-manage" onclick="closeOverlay(event,'modal-manage')">
+  <div class="modal wide">
+    <h2 class="modal-title gold">MANAGE <span>PRODUCTS</span></h2>
+    <div id="manage-list"><div class="loader"><div class="spin"></div>Loading…</div></div>
+    <div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal('modal-manage')">Close</button></div>
+  </div>
+</div>
+
+<!-- Edit Product (Admin) -->
+<div class="overlay" id="modal-edit-product" onclick="closeOverlay(event,'modal-edit-product')">
+  <div class="modal">
+    <h2 class="modal-title gold">EDIT <span>PRODUCT</span></h2>
+    <input type="hidden" id="ep-id"/>
+    <div class="form-group"><label>Product Name</label><input id="ep-name"/></div>
+    <div class="form-row">
+      <div class="form-group"><label>Price (₹)</label><input id="ep-price" type="number" step="0.01"/></div>
+      <div class="form-group"><label>Stock Qty</label><input id="ep-stock" type="number"/></div>
+    </div>
+    <div class="form-group"><label>Description</label><textarea id="ep-desc"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-edit-product');openManageProducts()">Cancel</button>
+      <button class="btn btn-gold" onclick="saveProduct()">💾 Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER SUCCESS POPUP -->
+<div class="success-overlay" id="success-overlay">
+  <div class="success-box">
+    <span class="success-icon">🎉</span>
+    <div class="success-title">ORDER PLACED!</div>
+    <div class="success-sub">Your order has been confirmed and is being processed.</div>
+    <div class="success-amount" id="success-amount"></div>
+    <div class="success-addr" id="success-addr"></div>
+    <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-teal" onclick="closeSuccess();showPage('my-orders')">📦 View My Orders</button>
+      <button class="btn btn-secondary" onclick="closeSuccess();showPage('products')">🛍️ Continue Shopping</button>
+    </div>
+  </div>
+</div>
+
+<div id="toasts"></div>
+
+<script>
+const API = 'http://localhost:5050/api';
+const ADMIN_USER = 'admin', ADMIN_PASS = 'admin123';
+let role = null, currentCustomer = null;
+let allProducts = [], allCustomers = [], currentCart = [];
+
+// ── HELPERS ──────────────────────────────────────────────────
+const fmt = n => '₹' + Number(n).toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2});
+const emojiMap = ['💻','🎧','⌨️','🖱️','📷','🖥️','🎮','📱','🔌','💡','🖨️','⌚','🎒','👟','📚'];
+const pEmoji = id => emojiMap[id % emojiMap.length];
+
+function toast(msg, type='success'){
+  const el=document.createElement('div');
+  el.className=`toast ${type}`;el.textContent=msg;
+  document.getElementById('toasts').appendChild(el);
+  setTimeout(()=>el.remove(),3500);
+}
+
+// ── PAGE ROUTING ─────────────────────────────────────────────
+function showPage(name){
+  document.querySelectorAll('.page,.page-flex').forEach(p=>{
+    p.classList.remove('active');
+  });
+  const el = document.getElementById('page-'+name);
+  if(el) el.classList.add('active');
+
+  // update active nav buttons
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+
+  if(name==='products') loadProducts();
+  if(name==='customers') loadCustomers();
+  if(name==='cart') loadCart();
+  if(name==='my-orders') loadMyOrders();
+  if(name==='all-orders'){ populateOrdersSelect(); }
+  if(name==='admin') loadAdminStats();
+}
+
+function goHome(){
+  if(role==='customer') showPage('products');
+  else if(role==='admin') showPage('admin');
+  else showPage('landing');
+}
+
+// ── AUTH ─────────────────────────────────────────────────────
+async function customerLogin(){
+  const id = parseInt(document.getElementById('cl-id').value);
+  const email = document.getElementById('cl-email').value.trim();
+  if(!id||!email) return toast('Enter your Customer ID and Email.','warning');
+  try{
+    const res = await fetch(`${API}/customers/${id}`);
+    const data = await res.json();
+    if(!data.success) return toast('Customer not found. Check your ID.','error');
+    if(data.data.email.toLowerCase()!==email.toLowerCase()) return toast('Email does not match.','error');
+    currentCustomer = data.data;
+    role='customer';
+    document.getElementById('cust-display-name').textContent = currentCustomer.name.split(' ')[0];
+    document.getElementById('nav-guest').style.display='none';
+    document.getElementById('nav-customer').style.display='flex';
+    document.getElementById('nav-admin').style.display='none';
+    showPage('products');
+    toast(`Welcome back, ${currentCustomer.name.split(' ')[0]}! 👋`);
+  }catch{toast('Connection error. Is the API running?','error');}
+}
+
+function adminLogin(){
+  const u=document.getElementById('al-user').value.trim();
+  const p=document.getElementById('al-pass').value;
+  if(u===ADMIN_USER&&p===ADMIN_PASS){
+    role='admin';
+    document.getElementById('nav-guest').style.display='none';
+    document.getElementById('nav-customer').style.display='none';
+    document.getElementById('nav-admin').style.display='flex';
+    document.getElementById('btn-add-product').style.display='';
+    showPage('admin');
+    toast('Welcome, Admin! ⚙️');
+  }else{
+    toast('Invalid credentials.','error');
+    document.getElementById('al-pass').value='';
+  }
+}
+
+function logout(){
+  role=null;currentCustomer=null;currentCart=[];
+  document.getElementById('nav-guest').style.display='flex';
+  document.getElementById('nav-customer').style.display='none';
+  document.getElementById('nav-admin').style.display='none';
+  document.getElementById('btn-add-product').style.display='none';
+  document.getElementById('cart-badge').style.display='none';
+  document.getElementById('al-user').value='';
+  document.getElementById('al-pass').value='';
+  document.getElementById('cl-id').value='';
+  document.getElementById('cl-email').value='';
+  showPage('landing');
+  toast('Logged out successfully.','warning');
+}
+
+// ── PRODUCTS ─────────────────────────────────────────────────
+async function loadProducts(){
+  document.getElementById('products-grid').innerHTML='<div class="loader"><div class="spin"></div>Loading…</div>';
+  try{
+    const data=(await (await fetch(`${API}/products`)).json());
+    allProducts=data.data||[];
+    renderProducts(allProducts);
+  }catch{
+    document.getElementById('products-grid').innerHTML='<div class="empty-state"><span class="ei">❌</span>Could not connect to API</div>';
+  }
+}
+
+function renderProducts(list){
+  const g=document.getElementById('products-grid');
+  if(!list.length){g.innerHTML='<div class="empty-state"><span class="ei">📦</span>No products found</div>';return;}
+  g.innerHTML=list.map(p=>{
+    const sc=p.stockQuantity===0?'out':p.stockQuantity<10?'low':'in';
+    const sl=p.stockQuantity===0?'Out of Stock':p.stockQuantity<10?`Low: ${p.stockQuantity}`:'In Stock';
+    const canBuy = role==='customer' && p.stockQuantity>0;
+    const isAdm = role==='admin';
+    return `<div class="product-card">
+      <div class="product-card-thumb">
+        <span class="stock-tag ${sc}">${sl}</span>
+        ${pEmoji(p.productId)}
+      </div>
+      <div class="product-body">
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.description||'No description available.'}</div>
+        <div class="product-foot">
+          <div class="product-price">${fmt(p.price)}<small> incl. GST</small></div>
+          <div style="display:flex;gap:.4rem">
+            ${canBuy?`<button class="icon-btn" title="Add to Cart" onclick="openAddToCart(${p.productId})">🛒</button>`:''}
+            ${isAdm?`<button class="icon-btn" title="Delete" onclick="deleteProduct(${p.productId},'${p.name.replace(/'/g,"\\'")}')">🗑️</button>`:''}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterProducts(){
+  const q=document.getElementById('product-search').value.toLowerCase();
+  renderProducts(allProducts.filter(p=>p.name.toLowerCase().includes(q)||p.description?.toLowerCase().includes(q)));
+}
+
+async function createProduct(){
+  const name=document.getElementById('p-name').value.trim();
+  const price=parseFloat(document.getElementById('p-price').value);
+  const stock=parseInt(document.getElementById('p-stock').value);
+  const desc=document.getElementById('p-desc').value.trim();
+  if(!name||isNaN(price)||isNaN(stock)) return toast('Fill all fields.','warning');
+  try{
+    const d=await(await fetch(`${API}/products`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,price,description:desc,stockQuantity:stock})})).json();
+    if(d.success){toast('Product created! ✅');closeModal('modal-product');loadProducts();['p-name','p-price','p-stock','p-desc'].forEach(i=>document.getElementById(i).value='');}
+    else toast(d.message,'error');
+  }catch{toast('API error','error');}
+}
+
+async function deleteProduct(id,name){
+  if(!confirm(`Delete "${name}"?`)) return;
+  try{
+    const d=await(await fetch(`${API}/products/${id}`,{method:'DELETE'})).json();
+    if(d.success){toast('Deleted.');loadProducts();}else toast(d.message,'error');
+  }catch{toast('API error','error');}
+}
+
+// ── MANAGE PRODUCTS (Admin) ───────────────────────────────────
+async function openManageProducts(){
+  openModal('modal-manage');
+  const list=document.getElementById('manage-list');
+  list.innerHTML='<div class="loader"><div class="spin"></div>Loading…</div>';
+  try{
+    const data=await(await fetch(`${API}/products`)).json();
+    allProducts=data.data||[];
+    if(!allProducts.length){list.innerHTML='<div class="empty-state">No products</div>';return;}
+    list.innerHTML=allProducts.map(p=>`
+      <div class="manage-row">
+        <div class="manage-row-info">
+          <div class="manage-row-name">${p.name}</div>
+          <div class="manage-row-sub">Stock: ${p.stockQuantity} units</div>
+        </div>
+        <div class="manage-row-price">${fmt(p.price)}</div>
+        <button class="btn btn-gold btn-sm" onclick="openEditProduct(${p.productId})">✏️ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.productId},'${p.name.replace(/'/g,"\\'")}');closeModal('modal-manage')">🗑️</button>
+      </div>`).join('');
+  }catch{list.innerHTML='<div class="empty-state">Failed to load</div>';}
+}
+
+function openEditProduct(id){
+  const p=allProducts.find(x=>x.productId===id);if(!p) return;
+  document.getElementById('ep-id').value=p.productId;
+  document.getElementById('ep-name').value=p.name;
+  document.getElementById('ep-price').value=p.price;
+  document.getElementById('ep-stock').value=p.stockQuantity;
+  document.getElementById('ep-desc').value=p.description;
+  closeModal('modal-manage');openModal('modal-edit-product');
+}
+
+async function saveProduct(){
+  const id=document.getElementById('ep-id').value;
+  const name=document.getElementById('ep-name').value.trim();
+  const price=parseFloat(document.getElementById('ep-price').value);
+  const stock=parseInt(document.getElementById('ep-stock').value);
+  const desc=document.getElementById('ep-desc').value.trim();
+  if(!name||isNaN(price)||isNaN(stock)) return toast('Fill all fields.','warning');
+  try{
+    await fetch(`${API}/products/${id}`,{method:'DELETE'});
+    const d=await(await fetch(`${API}/products`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,price,description:desc,stockQuantity:stock})})).json();
+    if(d.success){toast('Product updated! ✅');closeModal('modal-edit-product');loadProducts();}
+    else toast(d.message,'error');
+  }catch{toast('API error','error');}
+}
+
+// ── CUSTOMERS ────────────────────────────────────────────────
+async function loadCustomers(){
+  document.getElementById('customers-list').innerHTML='<div class="loader"><div class="spin"></div>Loading…</div>';
+  try{
+    const data=await(await fetch(`${API}/customers`)).json();
+    allCustomers=data.data||[];renderCustomers(allCustomers);
+  }catch{toast('Failed to load customers.','error');}
+}
+
+function renderCustomers(list){
+  const el=document.getElementById('customers-list');
+  if(!list.length){el.innerHTML='<div class="empty-state"><span class="ei">👤</span>No customers yet</div>';return;}
+  el.innerHTML=`<table class="data-table"><thead><tr><th>ID</th><th>Customer</th><th>Email</th><th>Actions</th></tr></thead><tbody>
+    ${list.map(c=>`<tr>
+      <td><span class="id-chip">#${c.customerId}</span></td>
+      <td><div class="cell-user"><div class="avatar">${c.name.charAt(0).toUpperCase()}</div>${c.name}</div></td>
+      <td style="color:var(--text-muted)">${c.email}</td>
+      <td style="display:flex;gap:.4rem;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="viewCustomerOrders(${c.customerId})">📦 Orders</button>
+        <button class="btn btn-secondary btn-sm" onclick="deleteCustomer(${c.customerId},'${c.name.replace(/'/g,"\\'")}')">🗑️</button>
+      </td>
+    </tr>`).join('')}
+  </tbody></table>`;
+}
+
+async function createCustomer(){
+  const name=document.getElementById('c-name').value.trim();
+  const email=document.getElementById('c-email').value.trim();
+  const password=document.getElementById('c-password').value;
+  if(!name||!email||!password) return toast('Fill all fields.','warning');
+  try{
+    const d=await(await fetch(`${API}/customers/register`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,password})})).json();
+    if(d.success){toast('Customer registered! ✅');closeModal('modal-customer');loadCustomers();['c-name','c-email','c-password'].forEach(i=>document.getElementById(i).value='');}
+    else toast(d.message,'error');
+  }catch{toast('API error','error');}
+}
+
+async function deleteCustomer(id,name){
+  if(!confirm(`Delete "${name}"?`)) return;
+  try{
+    const d=await(await fetch(`${API}/customers/${id}`,{method:'DELETE'})).json();
+    if(d.success){toast('Deleted.');loadCustomers();}else toast(d.message,'error');
+  }catch{toast('API error','error');}
+}
+
+function viewCustomerOrders(id){
+  showPage('all-orders');
+  populateOrdersSelect().then(()=>{
+    document.getElementById('orders-cust-sel').value=id;
+    loadAllOrders();
+  });
+}
+
+// ── CART ─────────────────────────────────────────────────────
+function openAddToCart(pid){
+  const p=allProducts.find(x=>x.productId===pid);if(!p) return;
+  document.getElementById('atc-pid').value=pid;
+  document.getElementById('atc-qty').value=1;
+  document.getElementById('atc-product-info').innerHTML=`<strong>${p.name}</strong> &nbsp;·&nbsp; <span style="color:var(--teal)">${fmt(p.price)}</span> &nbsp;·&nbsp; <span style="color:var(--text-muted)">Stock: ${p.stockQuantity}</span>`;
+  openModal('modal-add-cart');
+}
+
+async function addToCart(){
+  const pid=parseInt(document.getElementById('atc-pid').value);
+  const qty=parseInt(document.getElementById('atc-qty').value);
+  if(!qty||qty<1) return toast('Enter valid quantity.','warning');
+  if(!currentCustomer) return toast('Please log in first.','error');
+  try{
+    const d=await(await fetch(`${API}/cart/add`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerId:currentCustomer.customerId,productId:pid,quantity:qty})})).json();
+    if(d.success){
+      toast('Added to cart! 🛒');closeModal('modal-add-cart');
+      // update badge
+      const b=document.getElementById('cart-badge');
+      b.textContent=parseInt(b.textContent||0)+1;b.style.display='';
+    }else toast(d.message,'error');
+  }catch{toast('API error','error');}
+}
+
+async function loadCart(){
+  if(!currentCustomer) return;
+  const content=document.getElementById('cart-content');
+  content.innerHTML='<div class="loader"><div class="spin"></div>Loading cart…</div>';
+  try{
+    const data=await(await fetch(`${API}/cart/${currentCustomer.customerId}`)).json();
+    currentCart=data.data||[];renderCart();
+  }catch{toast('Failed to load cart.','error');}
+}
+
+function renderCart(){
+  const el=document.getElementById('cart-content');
+  const badge=document.getElementById('cart-badge');
+  badge.textContent=currentCart.length;badge.style.display=currentCart.length?'':'none';
+  if(!currentCart.length){
+    el.innerHTML='<div class="cart-empty-state"><div class="big-icon">🛒</div><h3>YOUR CART IS EMPTY</h3><p>Go to Products and add some items!</p></div>';return;
+  }
+  const total=currentCart.reduce((s,i)=>s+(i.product?.price||0)*i.quantity,0);
+  el.innerHTML=`<div class="cart-wrap">
+    ${currentCart.map(i=>`<div class="cart-item">
+      <div class="cart-thumb">${pEmoji(i.productId)}</div>
+      <div><div class="cart-name">${i.product?.name||'Product'}</div><div class="cart-sub">${fmt(i.product?.price||0)} each</div></div>
+      <div class="cart-qty">${i.quantity}<small>units</small></div>
+      <button class="icon-btn" style="color:var(--accent)" onclick="removeFromCart(${i.productId})" title="Remove">✕</button>
+    </div>`).join('')}
+    <div class="cart-total-bar">
+      <div><div class="total-label">Order Total</div><div class="total-amount">${fmt(total)}</div></div>
+      <button class="btn btn-teal" onclick="openPlaceOrder()">🚀 Place Order</button>
+    </div>
+  </div>`;
+}
+
+async function removeFromCart(pid){
+  if(!confirm('Remove this item?')) return;
+  try{
+    const d=await(await fetch(`${API}/cart/remove`,{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerId:currentCustomer.customerId,productId:pid})})).json();
+    if(d.success){toast('Removed.');loadCart();}else toast(d.message,'error');
+  }catch{toast('API error','error');}
+}
+
+function openPlaceOrder(){
+  const total=currentCart.reduce((s,i)=>s+(i.product?.price||0)*i.quantity,0);
+  document.getElementById('order-summary').innerHTML=`<strong style="color:var(--text)">${currentCart.length} item(s)</strong>&nbsp;·&nbsp;Total: <strong style="color:var(--accent)">${fmt(total)}</strong>`;
+  document.getElementById('order-addr').value='';
+  openModal('modal-order');
+}
+
+async function placeOrder(){
+  const addr=document.getElementById('order-addr').value.trim();
+  if(!addr) return toast('Enter shipping address.','warning');
+  const items=currentCart.map(i=>({productId:i.productId,quantity:i.quantity}));
+  const total=currentCart.reduce((s,i)=>s+(i.product?.price||0)*i.quantity,0);
+  try{
+    const d=await(await fetch(`${API}/orders/place`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerId:currentCustomer.customerId,shippingAddress:addr,items})})).json();
+    if(d.success){
+      closeModal('modal-order');
+      currentCart=[];
+      document.getElementById('cart-badge').style.display='none';
+      showOrderSuccess(total,addr);
+    }else toast(d.message,'error');
+  }catch{toast('API error','error');}
+}
+
+function showOrderSuccess(total,addr){
+  document.getElementById('success-amount').textContent=fmt(total);
+  document.getElementById('success-addr').textContent='📍 '+addr;
+  document.getElementById('success-overlay').classList.add('open');
+}
+function closeSuccess(){
+  document.getElementById('success-overlay').classList.remove('open');
+}
+
+// ── ORDERS ───────────────────────────────────────────────────
+async function loadMyOrders(){
+  if(!currentCustomer) return;
+  const el=document.getElementById('my-orders-list');
+  el.innerHTML='<div class="loader"><div class="spin"></div>Loading…</div>';
+  try{
+    const data=await(await fetch(`${API}/customers/${currentCustomer.customerId}/orders`)).json();
+    renderOrders(data.data||[],el);
+  }catch{toast('Failed to load orders.','error');}
+}
+
+async function populateOrdersSelect(){
+  if(!allCustomers.length){
+    try{const d=await(await fetch(`${API}/customers`)).json();allCustomers=d.data||[];}catch{}
+  }
+  const sel=document.getElementById('orders-cust-sel');
+  const cur=sel.value;
+  sel.innerHTML='<option value="">All Customers…</option>'+allCustomers.map(c=>`<option value="${c.customerId}">${c.name}</option>`).join('');
+  if(cur) sel.value=cur;
+}
+
+async function loadAllOrders(){
+  const cid=document.getElementById('orders-cust-sel').value;
+  const el=document.getElementById('all-orders-list');
+  if(!cid){el.innerHTML='<div class="empty-state"><span class="ei">📋</span>Select a customer above</div>';return;}
+  el.innerHTML='<div class="loader"><div class="spin"></div>Loading…</div>';
+  try{
+    const data=await(await fetch(`${API}/customers/${cid}/orders`)).json();
+    renderOrders(data.data||[],el);
+  }catch{toast('Failed to load orders.','error');}
+}
+
+function renderOrders(orders,el){
+  if(!orders.length){el.innerHTML='<div class="empty-state"><span class="ei">📦</span>No orders yet</div>';return;}
+  el.innerHTML=orders.map(o=>`<div class="order-card">
+    <div class="order-head">
+      <div><div class="order-num">ORDER #${o.orderId}</div><div class="order-meta">${new Date(o.orderDate).toLocaleString('en-IN')}</div></div>
+      <div class="order-amount">${fmt(o.totalPrice)}</div>
+    </div>
+    <div class="order-rows">
+      ${(o.items||[]).map(i=>`<div class="order-row"><span>${pEmoji(i.productId)} ${i.product?.name||'Product'}</span><span style="color:var(--text-muted)">×${i.quantity} &mdash; ${fmt((i.product?.price||0)*i.quantity)}</span></div>`).join('')}
+    </div>
+    <div class="order-addr">📍 ${o.shippingAddress}</div>
+  </div>`).join('');
+}
+
+// ── ADMIN STATS ──────────────────────────────────────────────
+async function loadAdminStats(){
+  try{
+    const [pr,cu]=await Promise.all([fetch(`${API}/products`).then(r=>r.json()),fetch(`${API}/customers`).then(r=>r.json())]);
+    allProducts=pr.data||[];allCustomers=cu.data||[];
+    const stock=allProducts.reduce((s,p)=>s+p.stockQuantity,0);
+    const val=allProducts.reduce((s,p)=>s+p.price*p.stockQuantity,0);
+    document.getElementById('as-products').textContent=allProducts.length;
+    document.getElementById('as-customers').textContent=allCustomers.length;
+    document.getElementById('as-stock').textContent=stock.toLocaleString('en-IN');
+    document.getElementById('as-value').textContent=fmt(val);
+  }catch{toast('Could not load stats.','error');}
+}
+
+// ── CONTACT FORM ─────────────────────────────────────────────
+function sendContact(){
+  const name=document.getElementById('cf-name').value.trim();
+  const email=document.getElementById('cf-email').value.trim();
+  const msg=document.getElementById('cf-msg').value.trim();
+  if(!name||!email||!msg) return toast('Please fill all required fields.','warning');
+  toast(`Message sent! We'll reply to ${email} within 24hrs. ✉️`);
+  ['cf-name','cf-email','cf-msg'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('cf-subject').value='';
+}
+
+// ── MODAL HELPERS ────────────────────────────────────────────
+function openModal(id){document.getElementById('modal-'+id.replace('modal-','')).classList.add('open');}
+
+// fix: use full id
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function closeOverlay(e,id){if(e.target.id===id)closeModal(id);}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    document.querySelectorAll('.overlay.open').forEach(m=>m.classList.remove('open'));
+    document.getElementById('success-overlay').classList.remove('open');
+  }
+});
+
+// ── INIT ─────────────────────────────────────────────────────
+showPage('landing');
+</script>
+</body>
+</html>

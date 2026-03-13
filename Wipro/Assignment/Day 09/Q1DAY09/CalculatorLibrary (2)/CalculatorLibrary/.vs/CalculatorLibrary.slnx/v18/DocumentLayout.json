@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\rajha\\source\\repos\\CalculatorLibrary\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1D3C42C2-B756-47B7-BACB-9E87F3F959AC}|..\\CalculatorLibrary.Test\\CalculatorLibrary.Test.csproj|c:\\users\\rajha\\source\\repos\\calculatorlibrary.test\\calculatortests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BCDD4E34-3B3F-5E68-A779-901CBC06D53E}|CalculatorLibrary.csproj|c:\\users\\rajha\\source\\repos\\calculatorlibrary\\cakculator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BCDD4E34-3B3F-5E68-A779-901CBC06D53E}|CalculatorLibrary.csproj|solutionrelative:cakculator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CalculatorTests.cs",
+              "DocumentMoniker": "C:\\Users\\rajha\\source\\repos\\CalculatorLibrary.Test\\CalculatorTests.cs",
+              "RelativeDocumentMoniker": "..\\CalculatorLibrary.Test\\CalculatorTests.cs",
+              "ToolTip": "C:\\Users\\rajha\\source\\repos\\CalculatorLibrary.Test\\CalculatorTests.cs",
+              "RelativeToolTip": "..\\CalculatorLibrary.Test\\CalculatorTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T04:29:24.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Cakculator.cs",
+              "DocumentMoniker": "C:\\Users\\rajha\\source\\repos\\CalculatorLibrary\\Cakculator.cs",
+              "RelativeDocumentMoniker": "Cakculator.cs",
+              "ToolTip": "C:\\Users\\rajha\\source\\repos\\CalculatorLibrary\\Cakculator.cs",
+              "RelativeToolTip": "Cakculator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-26T04:20:21.497Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

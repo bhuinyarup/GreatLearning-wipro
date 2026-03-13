@@ -1,0 +1,56 @@
+@model EcommerceApplication.Models.Order
+@{
+    ViewData["Title"] = "Order Details";
+    Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Order: @Model.OrderNumber</h2>
+    <a class="btn btn-outline-secondary" asp-area="Admin" asp-controller="Orders" asp-action="Index">
+        ← Back
+    </a>
+</div>
+
+<div class="row g-3">
+    <div class="col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div><b>Total:</b> ₹ @Model.TotalAmount</div>
+                <div><b>Date:</b> @Model.CreatedAt.ToLocalTime()</div>
+                <div><b>Payment:</b> @Model.PaymentStatus</div>
+                <div><b>Status:</b> @Model.OrderStatus</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>Items</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product</th>
+                                <th class="text-end">Unit</th>
+                                <th class="text-center">Qty</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in Model.Items)
+                            {
+                                <tr>
+                                    <td>@i.Product?.Name</td>
+                                    <td class="text-end">₹ @i.UnitPrice</td>
+                                    <td class="text-center">@i.Quantity</td>
+                                    <td class="text-end">₹ @(i.UnitPrice * i.Quantity)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

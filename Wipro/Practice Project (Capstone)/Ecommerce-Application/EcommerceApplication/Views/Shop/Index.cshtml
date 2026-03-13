@@ -1,0 +1,49 @@
+@model IEnumerable<EcommerceApplication.Models.Product>
+@{
+    var cats = ViewBag.Categories as IEnumerable<EcommerceApplication.Models.Category>;
+    int? selected = ViewBag.SelectedCategoryId as int?;
+}
+
+<h2>Shop</h2>
+
+<form method="get">
+    <label>Category:</label>
+    <select name="categoryId" onchange="this.form.submit()">
+        <option value="">All</option>
+        @if (cats != null)
+        {
+            foreach (var c in cats)
+            {
+                <option value="@c.Id" selected="@(selected == c.Id)">
+                    @c.Name
+                </option>
+            }
+        }
+    </select>
+</form>
+
+<hr/>
+
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th style="width:220px;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Name</td>
+            <td>@p.Category?.Name</td>
+            <td>@p.Price</td>
+            <td>
+                <a asp-controller="Shop" asp-action="Details" asp-route-id="@p.Id">View</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,23 @@
+﻿@page
+@model W4Day1AssignmentsSolution.Pages.Items.IndexModel
+@{
+    ViewData["Title"] = "Item List";
+}
+
+<h2>Item List</h2>
+
+@if (!Model.Items.Any())
+{
+    <p>No items yet.</p>
+}
+else
+{
+    <ul>
+        @foreach (var item in Model.Items)
+        {
+            <li>@item</li>
+        }
+    </ul>
+}
+
+<p><a asp-page="/Items/Add">Add another item</a></p>

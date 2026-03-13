@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Day12Assignments.Tests/Day12Assignments.Tests.csproj" />
+  <Project Path="DesignPatternsDemo/DesignPatternsDemo.csproj" />
+  <Project Path="SolidReporting/SolidReporting.csproj" />
+</Solution>

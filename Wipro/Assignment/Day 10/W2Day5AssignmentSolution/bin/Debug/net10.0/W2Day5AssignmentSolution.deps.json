@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "W2Day5AssignmentSolution/1.0.0": {
+        "runtime": {
+          "W2Day5AssignmentSolution.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "W2Day5AssignmentSolution/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

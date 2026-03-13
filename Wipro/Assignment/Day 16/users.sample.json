@@ -1,0 +1,14 @@
+﻿{
+  "_id": { "$oid": "65f300000000000000000901" },
+  "username": "jane_doe",
+  "email": "jane@example.com",
+  "passwordHash": "$argon2id$v=19$m=65536,t=3,p=2$...",
+  "roles": ["customer"],
+  "isEmailVerified": true,
+  "auth": {
+    "failedLoginCount": 0,
+    "lastLoginAt": { "$date": "2026-03-02T10:55:00Z" }
+  },
+  "createdAt": { "$date": "2025-12-10T08:00:00Z" },
+  "updatedAt": { "$date": "2026-03-02T10:55:00Z" }
+}

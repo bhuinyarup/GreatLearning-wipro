@@ -1,0 +1,12 @@
+C:\Users\rajha\Code\Wipro\Assignment\Day 12\DesignPatternsDemo\bin\Debug\net10.0\DesignPatternsDemo.deps.json
+C:\Users\rajha\Code\Wipro\Assignment\Day 12\DesignPatternsDemo\bin\Debug\net10.0\DesignPatternsDemo.dll
+C:\Users\rajha\Code\Wipro\Assignment\Day 12\DesignPatternsDemo\bin\Debug\net10.0\DesignPatternsDemo.pdb
+C:\Users\rajha\Code\Wipro\Assignment\Day 12\DesignPatternsDemo\obj\Debug\net10.0\DesignPatternsDemo.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rajha\Code\Wipro\Assignment\Day 12\DesignPatternsDemo\obj\Debug\net10.0\DesignPatternsDemo.AssemblyInfoInputs.cache
+C:\Users\rajha\Code\Wipro\Assignment\Day 12\DesignPatternsDemo\obj\Debug\net10.0\DesignPatternsDemo.AssemblyInfo.cs
+C:\Users\rajha\Code\Wipro\Assignment\Day 12\DesignPatternsDemo\obj\Debug\net10.0\DesignPatternsDemo.csproj.CoreCompileInputs.cache
+C:\Users\rajha\Code\Wipro\Assignment\Day 12\DesignPatternsDemo\obj\Debug\net10.0\DesignPatternsDemo.sourcelink.json
+C:\Users\rajha\Code\Wipro\Assignment\Day 12\DesignPatternsDemo\obj\Debug\net10.0\DesignPatternsDemo.dll
+C:\Users\rajha\Code\Wipro\Assignment\Day 12\DesignPatternsDemo\obj\Debug\net10.0\refint\DesignPatternsDemo.dll
+C:\Users\rajha\Code\Wipro\Assignment\Day 12\DesignPatternsDemo\obj\Debug\net10.0\DesignPatternsDemo.pdb
+C:\Users\rajha\Code\Wipro\Assignment\Day 12\DesignPatternsDemo\obj\Debug\net10.0\ref\DesignPatternsDemo.dll

@@ -1,0 +1,47 @@
+﻿{
+  "_id": { "$oid": "65f100000000000000000001" },
+  "sku": "ELEC-IPH15-128-BLK",
+  "name": "iPhone 15 128GB",
+  "category": "Electronics",
+  "subCategory": "Smartphones",
+  "brand": "Apple",
+  "price": {
+    "amount": 799.0,
+    "currency": "USD"
+  },
+  "stock": {
+    "available": 240,
+    "reserved": 12,
+    "warehouse": "WH-NJ-01"
+  },
+  "attributes": {
+    "color": "Black",
+    "storage": "128GB",
+    "screenSize": "6.1in"
+  },
+  "images": [
+    "https://cdn.example.com/p/elec-iph15-128-blk-1.jpg"
+  ],
+  "isActive": true,
+  "createdAt": { "$date": "2026-03-01T10:00:00Z" },
+  "updatedAt": { "$date": "2026-03-02T10:00:00Z" }
+}
+
+{
+  "_id": { "$oid": "65f100000000000000000002" },
+  "sku": "APP-TSHIRT-M-BLU",
+  "name": "Men's Cotton T-Shirt",
+  "category": "Apparel",
+  "subCategory": "Tops",
+  "brand": "UrbanWeave",
+  "price": { "amount": 19.99, "currency": "USD" },
+  "stock": { "available": 1200, "reserved": 35, "warehouse": "WH-TX-02" },
+  "attributes": {
+    "size": "M",
+    "color": "Blue",
+    "material": "Cotton"
+  },
+  "isActive": true,
+  "createdAt": { "$date": "2026-02-20T10:00:00Z" },
+  "updatedAt": { "$date": "2026-03-02T09:00:00Z" }
+}
